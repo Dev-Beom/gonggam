@@ -99,17 +99,17 @@ apiRouter.post('/category3', function(req, res){
         .addCarditem(
           `${data[0].title}`,
           `${data[0].body}`,
-            'http://spartan.ssu.ac.kr/data/skin/default/images/common/hd_logo_v2_pc.png'
+            'https://image.freepik.com/free-vector/spartan-logo-design-ready-to-use_111165-17.jpg'
         )
         .addCarditem(
           `${data[1].title}`,
           `${data[1].body}`,
-            'http://spartan.ssu.ac.kr/data/skin/default/images/common/hd_logo_v2_pc.png'
+            'https://image.freepik.com/free-vector/spartan-logo-design-ready-to-use_111165-17.jpg'
         )
         .addCarditem(
           `${data[2].title}`,
           `${data[2].body}`,
-          'http://spartan.ssu.ac.kr/data/skin/default/images/common/hd_logo_v2_pc.png'
+          'https://image.freepik.com/free-vector/spartan-logo-design-ready-to-use_111165-17.jpg'
       )
       .addCardButton('자세히', { action: 'webLink', webLinkUrl: 'http://gonggam.toast.paas-ta.com/' })
       .addQuickReplies('카테고리', { action: 'message', messageText: '카테고리'})
@@ -149,7 +149,7 @@ apiRouter.post('/category4', function(req, res){
 //중앙대학교
 apiRouter.post('/category5', function(req, res){
     let responseBody = new kakaoEmbed();
-    Post.find({group:'중앙대학교'}).limit(3).exec((err, data)=>{
+    Post.find({group:'중앙대학교'}).limit(3).exec((err, data)=>{z
         responseBody
         .addListCard()
         .setCardheader('중앙대학교')
