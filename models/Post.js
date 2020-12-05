@@ -12,6 +12,7 @@ var postSchema = mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date },
     group: { type: String, required: true },
+    deadline: { type: Date, required: true }
 });
 
 postSchema.pre('save', async function(next) {
