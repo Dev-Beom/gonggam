@@ -55,10 +55,10 @@ app.use(function(req, res, next) {
 
 // Routes
 app.use('/', require('./routes/home'));
-app.use('/api/posts', util.getPostQueryString, require('./routes/posts'));
-app.use('/api/users', require('./routes/users'));
-app.use('/api/comments', util.getPostQueryString, require('./routes/comments'));
-app.use('/api/files', require('./routes/files'));
+app.use('/posts', util.getPostQueryString, require('./routes/posts'));
+app.use('/users', require('./routes/users'));
+app.use('/comments', util.getPostQueryString, require('./routes/comments'));
+app.use('/files', require('./routes/files'));
 
 
 // Port setting
