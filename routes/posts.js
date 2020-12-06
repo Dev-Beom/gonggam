@@ -88,8 +88,6 @@ router.get('/', cors(), async function(req, res) {
     //     searchText: req.query.searchText
     // });
     res.status(200);
-    res.header('Access-Control-Allow-Origin', '*');
-
     res.json({
         posts: posts,
         currentPage: page,
@@ -136,7 +134,6 @@ router.get('/groups/', cors(),
 router.get('/new', cors(), util.isLoggedin, function(req, res) {
     var post = req.flash('post')[0] || {};
     var errors = req.flash('errors')[0] || {};
-    res.header('Access-Control-Allow-Origin', '*');
     res.render('posts/new', { post: post, errors: errors });
 });
 
@@ -157,24 +154,26 @@ router.post('/', cors(), util.isLoggedin, upload.single('attachment'), async fun
             attachment.save();
         }
         // res.redirect('/posts' + res.locals.getPostQueryString(false, { page: 1, searchText: '' }));
-        res.header('Access-Control-Allow-Origin', '*');
         res.json({ success: true });
     });
 });
 
 // show
 router.get('/:id', cors(), function(req, res) {
+    var commentForm = req.flash('commentForm')[0] || { _id: null, form: {} };
+    var commentError = req.flash('commentError')[0] || { _id: null, parentComment: null, errors: {} };
 
     Promise.all([
             Post.findOne({ _id: req.params.id }).populate({ path: 'author' }).populate({ path: 'attachment', match: { isDeleted: false } }),
             Comment.find({ post: req.params.id }).sort('createdAt').populate({ path: 'author', select: 'username' })
         ])
-        .then(([post]) => {
+        .then(([post, comments]) => {
             post.views++;
             post.save();
+            var commentTrees = util.convertToTrees(comments, '_id', 'parentComment', 'childComments');
             // res.render('posts/show', { post: post, commentTrees: commentTrees, commentForm: commentForm, commentError: commentError });
             res.status(200);
-            res.json({ post: post });
+            res.json({ post: post, commentTrees: commentTrees, commentForm: commentForm, commentError: commentError });
         })
         .catch((err) => {
             return res.json(err);
