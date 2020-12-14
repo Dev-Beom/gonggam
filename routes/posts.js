@@ -65,6 +65,8 @@ router.get('/', cors(), async function(req, res) {
             {
                 $project: {
                     title: 1,
+                    body: 1,
+                    deadline: 1,
                     author: {
                         username: 1,
                         name: 1,
